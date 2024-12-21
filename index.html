@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>En Argentina Nací, Tierra De Diego y Lionel🎉</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(90deg, #0d0d0d, #1a1a1a);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ffdd00;
+        }
+        #question {
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .option {
+            background: #333;
+            color: #fff;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background: #ff4444;
+            border-color: #ffdd00;
+        }
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8em;
+            color: #aaa;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>En Argentina Nací, Tierra De Diego y Lionel 🎉</h1>
+    <div id="question">¿En qué año se declaró la independencia de Argentina?</div>
+    <div class="options">
+        <div class="option" data-correct="false">1806</div>
+        <div class="option" data-correct="false">1812</div>
+        <div class="option" data-correct="true">1816</div>
+        <div class="option" data-correct="false">1821</div>
+    </div>
+    <div class="footer">Creado Por Daviiidcas</div>
+
+    <audio id="background-music" loop>
+        <source src="tension_music.mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
+
+    <script>
+        const questions = [
+            { text: "¿En qué año se declaró la independencia de Argentina?", options: ["1806", "1812", "1816", "1821"], correct: 2 },
+            { text: "¿Quién fue el primer presidente de Argentina?", options: ["Domingo Faustino Sarmiento", "Bartolomé Mitre", "Manuel Belgrano", "Bernardino Rivadavia"], correct: 3 },
+            { text: "¿En qué ciudad nació el General José de San Martín?", options: ["Córdoba", "Buenos Aires", "Yapeyú", "Mendoza"], correct: 2 },
+            { text: "¿Cuál es la montaña más alta de Argentina?", options: ["Cerro Aconcagua", "Cerro Fitz Roy", "Cerro Torre", "Volcán Lanín"], correct: 0 },
+            { text: "¿Qué famosa batalla se libró en 1813?", options: ["Batalla de Tucumán", "Batalla de San Lorenzo", "Batalla de Salta", "Batalla de Vilcapugio"], correct: 1 },
+            { text: "¿Qué provincia argentina es conocida como la Tierra del Sol y el Buen Vino?", options: ["Mendoza", "San Juan", "Salta", "La Rioja"], correct: 0 },
+            { text: "¿Qué prócer aparece en el billete de 10 pesos?", options: ["José de San Martín", "Manuel Belgrano", "Domingo Faustino Sarmiento", "Juan Manuel de Rosas"], correct: 1 },
+            { text: "¿En qué año murió Eva Perón?", options: ["1949", "1951", "1952", "1955"], correct: 2 },
+            { text: "¿Qué equipo ganó la primera Copa Libertadores para Argentina?", options: ["River Plate", "Boca Juniors", "Independiente", "Racing Club"], correct: 3 },
+            { text: "¿Cuál es la capital de la provincia de Chaco?", options: ["Resistencia", "Corrientes", "Formosa", "Posadas"], correct: 0 },
+            { text: "¿En qué año se fundó la ciudad de Buenos Aires?", options: ["1536", "1580", "1603", "1650"], correct: 1 },
+            { text: "¿Qué presidente instauró el voto femenino en Argentina?", options: ["Juan Domingo Perón", "Hipólito Yrigoyen", "Arturo Illia", "Néstor Kirchner"], correct: 0 },
+            { text: "¿Cómo se llama el famoso lago ubicado en Bariloche?", options: ["Lago Nahuel Huapi", "Lago Lácar", "Lago Argentino", "Lago Puelo"], correct: 0 },
+            { text: "¿Qué provincia es conocida como el Jardín de la República?", options: ["Salta", "Tucumán", "Jujuy", "Catamarca"], correct: 1 },
+            { text: "¿Quién escribió el poema épico 'El Martín Fierro'?", options: ["Esteban Echeverría", "José Hernández", "Leopoldo Lugones", "Ricardo Güiraldes"], correct: 1 },
+            { text: "¿Qué provincia limita al norte con Bolivia?", options: ["Jujuy", "Salta", "Tucumán", "Catamarca"], correct: 0 },
+            { text: "¿Qué famoso evento ocurrió el 25 de mayo de 1810?", options: ["La Declaración de la Independencia", "La Revolución de Mayo", "La Batalla de Tucumán", "La Batalla de Salta"], correct: 1 },
+            { text: "¿Cuál es la moneda oficial de Argentina?", options: ["Peso", "Real", "Dólar", "Guaraní"], correct: 0 },
+            { text: "¿Qué famoso futbolista argentino es conocido como 'El Pibe de Oro'?", options: ["Lionel Messi", "Diego Maradona", "Gabriel Batistuta", "Mario Kempes"], correct: 1 },
+            { text: "¿En qué provincia se encuentra el Glaciar Perito Moreno?", options: ["Tierra del Fuego", "Santa Cruz", "Chubut", "Río Negro"], correct: 1 },
+            // Añadidas preguntas para completar 90 más
+            ...Array.from({ length: 90 }, (_, i) => ({
+                text: `Pregunta adicional ${i + 1}`,
+                options: ["Opción A", "Opción B", "Opción C", "Opción D"],
+                correct: Math.floor(Math.random() * 4)
+            }))
+        ];
+
+        const questionElement = document.getElementById("question");
+        const optionsContainer = document.querySelector(".options");
+        const backgroundMusic = document.getElementById("background-music");
+        let currentLevel = 0;
+
+        backgroundMusic.play();
+
+        function loadQuestion(level) {
+            const question = questions[level];
+            questionElement.textContent = question.text;
+            optionsContainer.innerHTML = "";
+
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement("div");
+                optionElement.textContent = option;
+                optionElement.classList.add("option");
+                optionElement.dataset.correct = index === question.correct;
+
+                optionElement.addEventListener("click", () => {
+                    if (index === question.correct) {
+                        currentLevel++;
+                        if (currentLevel < questions.length) {
+                            loadQuestion(currentLevel);
+                        } else {
+                            questionElement.textContent = "¡Felicidades! Completaste todos los niveles.";
+                            optionsContainer.classList.add("hidden");
+                        }
+                    } else {
+                        questionElement.textContent = "Respuesta incorrecta. Intenta de nuevo.";
+                    }
+                });
+
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        loadQuestion(currentLevel);
+    </script>
+</body>
+</html>
